@@ -5,7 +5,7 @@ if __name__ == '__main__':
     if not os.path.exists(SPECTROGRAM_DIR):
         os.mkdir(SPECTROGRAM_DIR)
 
-    file_ds = tf.data.Dataset.list_files(os.path.join(VIDEO_DIR_PATH, "*"), shuffle=False).take(10)
+    file_ds = tf.data.Dataset.list_files(os.path.join(VIDEO_DIR_PATH, "*"), shuffle=False)
     for file in tqdm(file_ds.as_numpy_iterator()):
         file = file.decode("utf-8")
         filename_ext = os.path.basename(file)
