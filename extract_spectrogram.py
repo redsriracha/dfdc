@@ -28,21 +28,34 @@ if __name__ == "__main__":
 
     data_file = open("dataset/dfdc_train_part_0/metadata.json")
     data = json.load(data_file)
-    for item in data:
+
+    same = 0
+    diff = 0
+
+    for item in tqdm(data):
         if not data[item].get("original") == None:
-            img_1_path = os.path.splitext(item)[0] + ".png"
-            img_1 = tf.io.read_file(os.path.join(spectrogram_dir, img_1_path))
+            img_1_filename = os.path.splitext(item)[0] + ".png"
+            img_1 = tf.io.read_file(os.path.join(spectrogram_dir, img_1_filename))
             img_1 = tf.image.decode_png(img_1)
 
-            img_2_path = os.path.splitext(data[item].get("original"))[0] + ".png"
-            img_2 = tf.io.read_file(os.path.join(spectrogram_dir, img_2_path))
+            img_2_filename = os.path.splitext(data[item].get("original"))[0] + ".png"
+            img_2 = tf.io.read_file(os.path.join(spectrogram_dir, img_2_filename))
             img_2 = tf.image.decode_png(img_2)
 
             result = is_equal_image(img_1, img_2)
             result = result.numpy()
 
+            if result == True:
+                same += 1
+            else:
+                diff += 1
+
         else:
             result = True  # Original Video has no comparison
-        print("{0:6s}".format(str(result)), item, data[item].get("original"))
+            same += 1
+
+        # print("{0:6s}".format(str(result)), img_1_filename, img_2_filename)
+
+    print("\tSame:", same, "\tDiff:", diff, "\tTotal:", same+diff)
 
     # spectrogram_ds = tf.data.Dataset.list_files(os.path.join(spectrogram_dir, "*"), shuffle=False)
