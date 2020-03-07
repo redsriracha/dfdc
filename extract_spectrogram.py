@@ -42,7 +42,7 @@ if __name__ == "__main__":
             result = result.numpy()
 
         else:
-            result = "NA"
+            result = True  # Original Video has no comparison
         print("{0:6s}".format(str(result)), item, data[item].get("original"))
 
     # spectrogram_ds = tf.data.Dataset.list_files(os.path.join(spectrogram_dir, "*"), shuffle=False)
