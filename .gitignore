@@ -482,5 +482,4 @@ pip-selfcheck.json
 .history
 
 # End of https://www.gitignore.io/api/venv,video,python,images,pycharm,eclipse,jetbrains,jetbrains+all,visualstudiocode
-
-dataset
+dfdc.code-workspace
